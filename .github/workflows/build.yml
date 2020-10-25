@@ -20,7 +20,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: rsoi-person-service-yuhan
           heroku_email: yuhan.dong@yandex.ru
-          usedocker: true
       - name: Checkout test repository
         uses: actions/checkout@v2
         with:
