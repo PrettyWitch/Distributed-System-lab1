@@ -25,7 +25,7 @@ import java.util.List;
  * @purpose
  */
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/persons")
 public class PersonController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class PersonController {
      *
      * @return http 响应
      */
-    @GetMapping(value = "/all")
+    @GetMapping()
     public HttpEntity<?> getAllPerson(){ //HttpEntity其实相当于一个消息实体，用来发送或接收,内容是http传送的报文（这里可以说是html，css等等文件）
         List<Person> personList = personDao.findAll();
         if(personList == null || personList.isEmpty()){
@@ -50,7 +50,7 @@ public class PersonController {
      *
      * @return http 响应
      */
-    @GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public HttpEntity<?> findOnePerson(@PathVariable Integer id){
         return new ResponseEntity<>(personDao.findById(id).orElseThrow(()->
                 new ResourceNoFoundException(String.format("Person by id %s not found", id),404)),
@@ -63,7 +63,7 @@ public class PersonController {
      *
      * @return http 响应
      */
-    @PostMapping("/add")
+    @PostMapping()
     public HttpEntity<Void> addPerson(@Valid @RequestBody Person person, BindingResult bindingResult){
 //        int id = person.getId();
 
@@ -87,7 +87,7 @@ public class PersonController {
      *
      * @return http 响应
      */
-    @PatchMapping ("/update/{id}")
+    @PatchMapping ("/{id}")
     @Modifying(clearAutomatically = true)
     public HttpEntity<?> updatePerson(@PathVariable Integer id, @Valid @RequestBody Person person, BindingResult bindingResult){
         Person exist = personDao.findById(id).orElseThrow(() ->
@@ -106,7 +106,7 @@ public class PersonController {
      * @return http 响应
      */
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public HttpEntity<?> delete(@PathVariable Integer id){
         Person exist = personDao.findById(id).orElseThrow(() ->
                 new ResourceNoFoundException(String.format("Person by id %s not found", id),404));
