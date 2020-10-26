@@ -9,9 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -30,12 +28,7 @@ public class PersonController {
 
     @Autowired
     PersonDao personDao;
-    /**
-     * 获取所有人
-     * GET     /api/person/all
-     *
-     * @return http 响应
-     */
+
     @GetMapping()
     public HttpEntity<?> getAllPerson(){ //HttpEntity其实相当于一个消息实体，用来发送或接收,内容是http传送的报文（这里可以说是html，css等等文件）
         List<Person> personList = personDao.findAll();
@@ -44,12 +37,7 @@ public class PersonController {
         }
         return new ResponseEntity<>(personList, HttpStatus.OK);
     }
-    /**
-     * 获取一个人
-     * GET     /api/person/search/{id}
-     *
-     * @return http 响应
-     */
+
     @GetMapping("/{id}")
     public HttpEntity<?> findOnePerson(@PathVariable Integer id){
         return new ResponseEntity<>(personDao.findById(id).orElseThrow(()->
@@ -57,12 +45,7 @@ public class PersonController {
                 HttpStatus.OK);
     }
 
-    /**
-     * 添加一个人
-     * POST     /api/person/add
-     *
-     * @return http 响应
-     */
+
     @PostMapping()
     public HttpEntity<Void> addPerson(@Valid @RequestBody Person person, BindingResult bindingResult){
 //        int id = person.getId();
@@ -81,12 +64,7 @@ public class PersonController {
                 .buildAndExpand(id).toUri()).build();
     }
 
-    /**
-     * 更新一个人，提供一个人的全部内容
-     * PATCH     /api/person/update/{id}
-     *
-     * @return http 响应
-     */
+
     @PatchMapping ("/{id}")
     @Modifying(clearAutomatically = true)
     public HttpEntity<?> updatePerson(@PathVariable Integer id, @Valid @RequestBody Person person, BindingResult bindingResult){
@@ -98,13 +76,6 @@ public class PersonController {
         person.setId(exist.getId());
         return new ResponseEntity<>(personDao.save(person), HttpStatus.OK);
     }
-
-    /**
-     * 删除一个人
-     * DELETE     /api/person/delete/{id}
-     *
-     * @return http 响应
-     */
 
     @DeleteMapping("/{id}")
     public HttpEntity<?> delete(@PathVariable Integer id){

@@ -27,11 +27,11 @@ public class Person {
     private Integer id;
 
     @Column
-    @NotNull(message="name不能为空")
+    @NotNull
     private String name;
 
     @Column
-    @NotNull(message="age不能为空")
+    @NotNull
     private int age;
 
     @Column

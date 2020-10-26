@@ -32,10 +32,7 @@ import java.util.List;
 public class ApiExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ErrorVal badRequest (MethodArgumentNotValidException exception){
-//
-//    }
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNoFoundException.class)
     public HttpEntity<?> handleNotFound(ResourceNoFoundException e){

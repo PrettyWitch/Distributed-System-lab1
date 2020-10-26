@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PersonDao extends JpaRepository<Person, Integer> {
-//    @Override
-//    Integer deleteById(Integer integer);
+
 
 }
